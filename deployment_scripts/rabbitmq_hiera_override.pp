@@ -27,6 +27,14 @@ if ($detach_rabbitmq_plugin) {
                         'password'     => $rabbit_password,
                       })
 
+  $transport_url   = os_transport_url({
+                        'transport'    => 'rabbit',
+                        'hosts'        => strip(split($amqp_hosts,',')),
+                        'username'     => $rabbit_user,
+                        'password'     => $rabbit_password,
+                      })
+
+
   case hiera_array('roles', 'none') {
     /standalone-rabbitmq/: {
       $rabbit_enabled = true
