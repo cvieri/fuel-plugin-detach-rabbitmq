@@ -21,6 +21,14 @@ if ($detach_rabbitmq_plugin) {
   $amqp_hosts = $rabbit_nodes_ips
   $amqp_port = hiera('amqp_port', '5673')
 
+  $transport_url   = os_transport_url({
+                        'transport'    => 'rabbit',
+                        'hosts'        => strip(split($amqp_hosts,',')),
+                        'username'     => $rabbit_user,
+                        'password'     => $rabbit_password,
+                      })
+
+
   case hiera_array('roles', 'none') {
     /standalone-rabbitmq/: {
       $rabbit_enabled = true
